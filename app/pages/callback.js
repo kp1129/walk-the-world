@@ -15,8 +15,6 @@ import MainError from "../components/MainError";
 
 export default function Callback() {
   const {
-    accessToken,
-    userId,
     setAccessToken,
     setUserId,
     setTrackerSteps,
@@ -27,43 +25,38 @@ export default function Callback() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // parse data from url
     const url = window.location.href;
     const token = url.split("#")[1].split("=")[1].split("&")[0];
-    setAccessToken(token);
     const id = url.split("#")[1].split("=")[2].split("&")[0];
+    setAccessToken(token);
     setUserId(id);
-  }, []);
 
-  useEffect(() => {
-    if (userId) {
-      fetch(
-        `https://api.fitbit.com/1/user/${userId}/activities/tracker/steps/date/${currentYear}-${currentMonthPadded}-01/today.json`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+    // fetch user data
+    fetch(
+      `https://api.fitbit.com/1/user/${id}/activities/tracker/steps/date/${currentYear}-${currentMonthPadded}-01/today.json`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((response) => {
+        if (response.status !== 200) {
+          throw new Error("Unexpected response");
         }
-      )
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error("Unexpected response");
-          }
-          return response.json();
-        })
-        .then((response) => {
-          setTrackerSteps(response["activities-tracker-steps"]);
-          return response;
-        })
-        .then(() => {
-          Router.push("/");
-        })
-        .catch((err) => {
-          console.log("Request failed", err);
-          setError(err);
-        });
-    }
-  }, [userId]);
+        return response.json();
+      })
+      .then((response) => setTrackerSteps(response["activities-tracker-steps"]))
+      .then(() => {
+        Router.push("/");
+      })
+      .catch((err) => {
+        console.log("Request failed", err);
+        setError(err);
+      });
+  }, []);
 
   return (
     <StyledAppContainer>
