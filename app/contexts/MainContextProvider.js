@@ -20,6 +20,7 @@ export function MainContextProvider({ children }) {
   const today = new Date();
   const currentDate = today.getDate();
   const currentMonth = today.getMonth() + 1;
+  const currentMonthPadded = String(currentMonth).padStart(2, "0");
   const currentMonthLong = today.toLocaleString("default", { month: "long" });
   const currentMonthShort = today.toLocaleString("default", { month: "short" });
   const currentYear = today.getFullYear();
@@ -39,6 +40,8 @@ export function MainContextProvider({ children }) {
     setActivePreset,
     currentMonthLong,
     currentMonthShort,
+    currentMonthPadded,
+    currentYear,
     daysLeftInCurrentMonth,
     daysInCurrentMonth,
   };

@@ -14,8 +14,15 @@ import { StyledLoaderContainer } from "../styles/Callback.styles";
 import MainError from "../components/MainError";
 
 export default function Callback() {
-  const { accessToken, userId, setAccessToken, setUserId, setTrackerSteps } =
-    useMainContext();
+  const {
+    accessToken,
+    userId,
+    setAccessToken,
+    setUserId,
+    setTrackerSteps,
+    currentYear,
+    currentMonthPadded,
+  } = useMainContext();
 
   const [error, setError] = useState(null);
 
@@ -30,7 +37,7 @@ export default function Callback() {
   useEffect(() => {
     if (userId) {
       fetch(
-        `https://api.fitbit.com/1/user/${userId}/activities/tracker/steps/date/2022-08-01/today.json`,
+        `https://api.fitbit.com/1/user/${userId}/activities/tracker/steps/date/${currentYear}-${currentMonthPadded}-01/today.json`,
         {
           method: "GET",
           headers: {
