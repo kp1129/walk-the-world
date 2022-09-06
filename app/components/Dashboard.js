@@ -1,12 +1,16 @@
-import { StyledDashboard } from "../styles/Dashboard.styles";
+import { StyledDashboard, StyledMainDash } from "../styles/Dashboard.styles";
 import Sidebar from "./Sidebar";
-import MainDash from "./MainDash";
+import MainChart from "./MainChart";
+import Stats from "./Stats";
 
 export default function Dashboard() {
   return (
     <StyledDashboard>
       <Sidebar />
-      <MainDash />
+      <StyledMainDash>
+        <MainChart />
+        <Stats />
+      </StyledMainDash>
     </StyledDashboard>
   );
 }

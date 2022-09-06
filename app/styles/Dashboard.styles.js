@@ -8,3 +8,10 @@ export const StyledDashboard = styled("div")`
   font-size: 1.5rem;
   height: 100%;
 `;
+
+export const StyledMainDash = styled("main")`
+  width: 75%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
