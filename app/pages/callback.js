@@ -12,6 +12,7 @@ import {
 
 import { StyledLoaderContainer } from "../styles/Callback.styles";
 import MainError from "../components/MainError";
+import { fetchTrackerSteps } from "../Api";
 
 export default function Callback() {
   const {
@@ -33,18 +34,10 @@ export default function Callback() {
     setUserId(id);
 
     // fetch user data
-    fetch(
-      `https://api.fitbit.com/1/user/${id}/activities/tracker/steps/date/${currentYear}-${currentMonthPadded}-01/today.json`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    fetchTrackerSteps(token, id, currentYear, currentMonthPadded)
       .then((response) => {
         if (response.status !== 200) {
-          throw new Error("Unexpected response");
+          throw new Error("Response error");
         }
         return response.json();
       })
