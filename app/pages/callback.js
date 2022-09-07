@@ -5,11 +5,6 @@ import dynamic from "next/dynamic";
 const GridLoader = dynamic(() => import("react-spinners/GridLoader"), {
   ssr: false,
 });
-import {
-  StyledAppContainer,
-  StyledAppGlassWrapper,
-} from "../styles/Home.styles";
-
 import { StyledLoaderContainer } from "../styles/Callback.styles";
 import MainError from "../components/MainError";
 import { fetchTrackerSteps } from "../Api";
@@ -43,7 +38,7 @@ export default function Callback() {
       })
       .then((response) => setTrackerSteps(response["activities-tracker-steps"]))
       .then(() => {
-        Router.push("/");
+        Router.push("/dashboard");
       })
       .catch((err) => {
         console.log("Request failed", err);
@@ -51,17 +46,11 @@ export default function Callback() {
       });
   }, []);
 
-  return (
-    <StyledAppContainer>
-      <StyledAppGlassWrapper>
-        {error ? (
-          <MainError />
-        ) : (
-          <StyledLoaderContainer>
-            <GridLoader loading={true} color="#37aab2" size={15} />
-          </StyledLoaderContainer>
-        )}
-      </StyledAppGlassWrapper>
-    </StyledAppContainer>
+  return error ? (
+    <MainError />
+  ) : (
+    <StyledLoaderContainer>
+      <GridLoader loading={true} color="#37aab2" size={15} />
+    </StyledLoaderContainer>
   );
 }
