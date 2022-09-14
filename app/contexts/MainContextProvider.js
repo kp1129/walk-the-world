@@ -9,6 +9,7 @@ export function MainContextProvider({ children }) {
     athens: 31,
     london: 50,
     earth: 7900,
+    moon: 238900,
   };
 
   const [accessToken, setAccessToken] = useState(null);

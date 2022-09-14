@@ -75,8 +75,9 @@ export default function MainChart() {
   return (
     <StyledMainChart>
       <StyledChartHeader>
-        {" "}
-        {currentMonthLong} Walking Challenge: {capitalizedStr(activePreset)}
+        {`${currentMonthLong} Walking Challenge:${
+          activePreset === "moon" ? " to the " : ""
+        } ${capitalizedStr(activePreset)}`}
       </StyledChartHeader>
       <div id="chart">
         {typeof window !== undefined && (
