@@ -8,6 +8,7 @@ const GridLoader = dynamic(() => import("react-spinners/GridLoader"), {
 import { StyledLoaderContainer } from "../styles/Callback.styles";
 import MainError from "../components/MainError";
 import { fetchTrackerSteps } from "../Api";
+import Head from "next/head";
 
 export default function Callback() {
   const {
@@ -46,11 +47,19 @@ export default function Callback() {
       });
   }, []);
 
-  return error ? (
-    <MainError />
-  ) : (
-    <StyledLoaderContainer>
-      <GridLoader loading={true} color="#37aab2" size={15} />
-    </StyledLoaderContainer>
+  return (
+    <>
+      <Head>
+        <title>Walk the World</title>
+      </Head>
+
+      {error ? (
+        <MainError />
+      ) : (
+        <StyledLoaderContainer>
+          <GridLoader loading={true} color="#37aab2" size={15} />
+        </StyledLoaderContainer>
+      )}
+    </>
   );
 }
